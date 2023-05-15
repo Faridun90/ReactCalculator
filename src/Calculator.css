@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+}
+
+body {
+  background: linear-gradient(to right, #00aaff71, #00ff6a84);
+}
+
+/* Calculator container */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: lightGrey;
+  width: 350px;
+  margin: auto;
+  border-radius: 15px;
+  border: 1px solid black;
+  box-shadow: 0px 0px 10px 10px #626265b7;
+}
+
+
+/* Display container */
+.display {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding-right: 20px;
+  max-width: 400px;
+  background-color: #292727cf;
+  color: #f9faf9e1;
+  min-height: 110px;
+  height: fit-content;
+  font-size: 4.2em;
+  word-wrap: break-word;
+  word-break: break-all;
+  border-radius: 14px 14px 0 0;
+}
+
+/* Buttons container */
+.buttons {
+  max-width: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 0 0 8px 8px;
+}
+
+button:hover {
+  opacity: 0.7;
+}
+
+button {
+  height: 75px;
+  flex: 1 25%;
+  color: #070f07f7;
+  font-size: 2.3em;
+  font-weight: 400;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+/* Layout for Number-Operator buttons */
+
+.btn-operator,
+.btn-equals {
+  background-color: orange;
+  font-size: 2.5em;
+  font-weight: bolder;
+}
+
+.btn-number,
+.grey,
+.large {
+  background-color: #878484;
+}
+
+.large {
+  border-radius: 0 0 0 14px;
+}
+
+.dark-grey {
+  background-color: #646161;
+}
+
+.large {
+  flex: 2 50%;
+}
+
+.btn-equals {
+  border-radius: 0 0 14px 0;
+}
+
+
