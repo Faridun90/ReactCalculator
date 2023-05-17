@@ -39,43 +39,39 @@ function Calculator() {
     "-": "-",
     "*": "*",
     "/": "/",
+    "%": "%",
     ".": ".",
     "=": "=",
   };
 
   const handleButtonClick = (value) => {
-    let updateDisplayData = displayData;
-    if (value === "=") {
-      console.log(1);
-      try {
-        if (displayData.includes("%")) {
-          updateDisplayData = handlePercentage(displayData);
-        } else {
-          updateDisplayData = eval(displayData).toFixed(3);
+    setDisplayData((prevDisplayData) => {
+      let updateDisplayData = prevDisplayData;
+
+      if (value === "=") {
+        try {
+          if (prevDisplayData.includes("%")) {
+            updateDisplayData = handlePercentage(prevDisplayData);
+          } else {
+            updateDisplayData = eval(prevDisplayData).toFixed(3);
+          }
+        } catch (error) {
+          updateDisplayData = "Error";
         }
-      } catch (error) {
-        updateDisplayData = "Error";
-      }
-    } else if (value === "clear") {
-      console.log(2);
-      updateDisplayData = "0";
-    } else if (value === "+/-") {
-      console.log(3);
-      updateDisplayData = flipSign(displayData);
-    } else {
-      console.log(4);
-      console.log(value);
-      if (displayData === "0") {
-        console.log(displayData);
-        console.log("A");
-        updateDisplayData = value;
+      } else if (value === "clear") {
+        updateDisplayData = "0";
+      } else if (value === "+/-") {
+        updateDisplayData = flipSign(prevDisplayData);
       } else {
-        console.log("B");
-        updateDisplayData += value;
+        if (prevDisplayData === "0") {
+          updateDisplayData = value;
+        } else {
+          updateDisplayData += value;
+        }
       }
-    }
-    console.log("final upda53", updateDisplayData);
-    setDisplayData(updateDisplayData);
+
+      return updateDisplayData;
+    });
   };
 
   const handlePercentage = (operatingString) => {
