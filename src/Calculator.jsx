@@ -1,30 +1,77 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Calculator.css";
 import Button from "./Button";
 
 function Calculator() {
-  const [displayData, setDisplayData] = useState("");
+  const [displayData, setDisplayData] = useState("0");
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const handleKeyDown = (event) => {
+    const { key } = event;
+
+    if (key === "Enter") {
+      handleButtonClick("=");
+    } else if (key === "Backspace") {
+      handleButtonClick("clear");
+    } else if (key in keyMappings) {
+      handleButtonClick(keyMappings[key]);
+    }
+  };
+
+  const keyMappings = {
+    "0": "0",
+    "1": "1",
+    "2": "2",
+    "3": "3",
+    "4": "4",
+    "5": "5",
+    "6": "6",
+    "7": "7",
+    "8": "8",
+    "9": "9",
+    "+": "+",
+    "-": "-",
+    "*": "*",
+    "/": "/",
+    "%": "%",
+    ".": ".",
+    "=": "=",
+  };
 
   const handleButtonClick = (value) => {
-    let updateDisplayData = displayData;
+    setDisplayData((prevDisplayData) => {
+      let updateDisplayData = prevDisplayData;
 
-    if (value === "=") {
-      try {
-        if (displayData.includes("%")) {
-          updateDisplayData = handlePercentage(displayData);
-        } else {
-          updateDisplayData = eval(displayData).toFixed(3);
+      if (value === "=") {
+        try {
+          if (prevDisplayData.includes("%")) {
+            updateDisplayData = handlePercentage(prevDisplayData);
+          } else {
+            updateDisplayData = eval(prevDisplayData).toFixed(3);
+          }
+        } catch (error) {
+          updateDisplayData = "Error";
         }
-      } catch (error) {
-        updateDisplayData = "Error";
+      } else if (value === "clear") {
+        updateDisplayData = "0";
+      } else if (value === "+/-") {
+        updateDisplayData = flipSign(prevDisplayData);
+      } else {
+        if (prevDisplayData === "0") {
+          updateDisplayData = value;
+        } else {
+          updateDisplayData += value;
+        }
       }
-    } else if (value === "clear") {
-      updateDisplayData = "";
-    } else {
-      updateDisplayData += value;
-    }
 
-    setDisplayData(updateDisplayData);
+      return updateDisplayData;
+    });
   };
 
   const handlePercentage = (operatingString) => {
@@ -46,6 +93,14 @@ function Calculator() {
     return String(result);
   };
 
+  const flipSign = (value) => {
+    if (value.startsWith("-")) {
+      return value.substring(1);
+    } else {
+      return `-${value}`;
+    }
+  };
+
   return (
     <div>
       <h1>Welcome To My Calculator App</h1>
@@ -56,110 +111,115 @@ function Calculator() {
             label="AC"
             value="clear"
             onClick={handleButtonClick}
-            className="btn-clear dark-grey"
+            styles="btn-clear dark-grey"
           />
           <Button
             label="+/-"
             value="-"
             onClick={handleButtonClick}
-            className="btn-operator dark-grey"
+            styles="btn-operator dark-grey"
           />
           <Button
             label="%"
             value="%"
             onClick={handleButtonClick}
-            className="btn-percent dark-grey"
+            styles="btn-percent dark-grey"
           />
           <Button
             label="÷"
             value="/"
             onClick={handleButtonClick}
-            className="btn-operator"
+            styles="btn-operator"
           />
           <Button
             label="7"
             value="7"
             onClick={handleButtonClick}
-            className="btn-number"
+            styles="btn-number"
           />
           <Button
             label="8"
             value="8"
             onClick={handleButtonClick}
-            className="btn-number"
+            styles="btn-number"
           />
           <Button
             label="9"
             value="9"
             onClick={handleButtonClick}
-            className="btn-number"
+            styles="btn-number"
           />
-          <Button label="×" value="*" onClick={handleButtonClick} />
+          <Button
+            label="×"
+            value="*"
+            onClick={handleButtonClick}
+            styles="btn-operator"
+          />
           <Button
             label="4"
             value="4"
             onClick={handleButtonClick}
-            className="btn-number"
+            styles="btn-number"
           />
           <Button
             label="5"
             value="5"
             onClick={handleButtonClick}
-            className="btn-number"
+            styles="btn-number"
           />
           <Button
             label="6"
             value="6"
             onClick={handleButtonClick}
-            className="btn-number"
+            styles="btn-number"
           />
           <Button
             label="-"
             value="-"
             onClick={handleButtonClick}
-            className="btn-operator"
+            styles="btn-operator"
           />
           <Button
             label="1"
             value="1"
             onClick={handleButtonClick}
-            className="btn-number"
+            styles="btn-number"
           />
           <Button
             label="2"
             value="2"
             onClick={handleButtonClick}
-            className="btn-number"
+            styles="btn-number"
           />
           <Button
             label="3"
             value="3"
             onClick={handleButtonClick}
-            className="btn-number"
+            styles="btn-number"
           />
           <Button
             label="+"
             value="+"
             onClick={handleButtonClick}
-            class="btn-operator"
+            styles="btn-operator"
           />
           <Button
             label="0"
             value="0"
             onClick={handleButtonClick}
-            className="btn-number large"
+            styles="btn-number large"
           />
           <Button
             label="."
             value="."
             onClick={handleButtonClick}
-            className="btn-operator grey"
+            styles="btn-operator grey"
           />
           <Button
             label="="
             value="="
             onClick={handleButtonClick}
-            className="btn-equals"
+            styles="btn-equals"
           />
         </div>
       </div>
