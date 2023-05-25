@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./Calculator.css";
 import Button from "./Button";
+import { ButtonMapper } from "./constants";
 
 function Calculator() {
   const [displayData, setDisplayData] = useState("0");
@@ -101,127 +102,30 @@ function Calculator() {
     }
   };
 
+  function renderButtons() {
+    return (
+      <>
+        {ButtonMapper.map((button, index) => {
+          return (
+            <Button
+              label={button.label}
+              value={button.value}
+              styles={button.styles}
+              onClick={handleButtonClick}
+              key={index}
+            />
+          );
+        })}
+      </>
+    );
+  }
+
   return (
     <div>
       <h1>Welcome To My Calculator App</h1>
       <div className="container">
         <div className="display">{displayData}</div>
-        <div className="buttons">
-          <Button
-            label="AC"
-            value="clear"
-            onClick={handleButtonClick}
-            styles="btn-clear dark-grey"
-          />
-          <Button
-            label="+/-"
-            value="-"
-            onClick={handleButtonClick}
-            styles="btn-operator dark-grey"
-          />
-          <Button
-            label="%"
-            value="%"
-            onClick={handleButtonClick}
-            styles="btn-percent dark-grey"
-          />
-          <Button
-            label="÷"
-            value="/"
-            onClick={handleButtonClick}
-            styles="btn-operator"
-          />
-          <Button
-            label="7"
-            value="7"
-            onClick={handleButtonClick}
-            styles="btn-number"
-          />
-          <Button
-            label="8"
-            value="8"
-            onClick={handleButtonClick}
-            styles="btn-number"
-          />
-          <Button
-            label="9"
-            value="9"
-            onClick={handleButtonClick}
-            styles="btn-number"
-          />
-          <Button
-            label="×"
-            value="*"
-            onClick={handleButtonClick}
-            styles="btn-operator"
-          />
-          <Button
-            label="4"
-            value="4"
-            onClick={handleButtonClick}
-            styles="btn-number"
-          />
-          <Button
-            label="5"
-            value="5"
-            onClick={handleButtonClick}
-            styles="btn-number"
-          />
-          <Button
-            label="6"
-            value="6"
-            onClick={handleButtonClick}
-            styles="btn-number"
-          />
-          <Button
-            label="-"
-            value="-"
-            onClick={handleButtonClick}
-            styles="btn-operator"
-          />
-          <Button
-            label="1"
-            value="1"
-            onClick={handleButtonClick}
-            styles="btn-number"
-          />
-          <Button
-            label="2"
-            value="2"
-            onClick={handleButtonClick}
-            styles="btn-number"
-          />
-          <Button
-            label="3"
-            value="3"
-            onClick={handleButtonClick}
-            styles="btn-number"
-          />
-          <Button
-            label="+"
-            value="+"
-            onClick={handleButtonClick}
-            styles="btn-operator"
-          />
-          <Button
-            label="0"
-            value="0"
-            onClick={handleButtonClick}
-            styles="btn-number large"
-          />
-          <Button
-            label="."
-            value="."
-            onClick={handleButtonClick}
-            styles="btn-operator grey"
-          />
-          <Button
-            label="="
-            value="="
-            onClick={handleButtonClick}
-            styles="btn-equals"
-          />
-        </div>
+        <div className="buttons">{renderButtons()}</div>
       </div>
     </div>
   );
